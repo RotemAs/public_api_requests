@@ -6,16 +6,46 @@ let fetchUsers = [];
 const url = `https://randomuser.me/api/?results=12&inc=name, picture, email, location, phone, dob&noinfo &nat=US`;
 const gallery = document.getElementById("gallery");
 const searchContainer = document.querySelector(".search-container");
-
-const search = document.getElementById("search-input");
-
-const searchSubmit = document.getElementById("search-submit");
 let gModalIndex = 0;
 
 fetch(url) // Fetch request for random user API
   .then((res) => res.json())
   .then((res) => usersFetch(res.results))
   .catch((err) => console.log(err));
+
+
+  gallery.addEventListener("click", (e) => {
+    const card = e.target.closest(".card");
+    const index = card.getAttribute("data-index");
+    gModalIndex = index;
+    generateModal(gModalIndex);
+  });
+
+  generateSearchHTML();
+
+  const searchBtn = document.getElementById("search-submit");
+  const searchForm = document.querySelector(".search-form");
+  const searchField = document.getElementById("search-input");
+  
+  searchContainer.addEventListener("input", (e) => {
+    let searchText = e.target.value;
+    searchText = searchText.toUpperCase();
+    users = fetchUsers;
+    const filteredList = users.filter((student) => {
+      return (
+        student.name.first.toUpperCase().includes(searchText) ||
+        student.name.last.toUpperCase().includes(searchText)
+      );
+    });
+    filteredUsers = filteredList;
+    if (filteredUsers.length > 0) {
+      displayUsers(filteredUsers);
+    } else {
+      gallery.innerHTML = ` no results for " ${searchText} "`;
+    }
+  
+  });
+
 
 function usersFetch(userData) {
   fetchUsers = userData;
@@ -105,12 +135,6 @@ function generateModal(index) {
   });
 }
 
-gallery.addEventListener("click", (e) => {
-  const card = e.target.closest(".card");
-  const index = card.getAttribute("data-index");
-  gModalIndex = index;
-  generateModal(gModalIndex);
-});
 
 function moveModalBack() {
   if (gModalIndex > 0) {
@@ -138,28 +162,5 @@ function generateSearchHTML() {
   </form>`;
 }
 
-generateSearchHTML();
 
-const searchBtn = document.getElementById("search-submit");
-const searchForm = document.querySelector(".search-form");
-const searchField = document.getElementById("search-input");
-
-searchContainer.addEventListener("input", (e) => {
-  let searchText = e.target.value;
-  searchText = searchText.toUpperCase();
-  users = fetchUsers;
-  const filteredList = users.filter((student) => {
-    return (
-      student.name.first.toUpperCase().includes(searchText) ||
-      student.name.last.toUpperCase().includes(searchText)
-    );
-  });
-  filteredUsers = filteredList;
-  if (filteredUsers.length > 0) {
-    displayUsers(filteredUsers);
-  } else {
-    gallery.innerHTML = ` no results for " ${searchText} "`;
-  }
-
-});
 
