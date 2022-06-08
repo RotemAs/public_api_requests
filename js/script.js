@@ -149,7 +149,6 @@ function moveModalForeword() {
 function generateSearchHTML() {
   searchContainer.innerHTML = `<form action="#" method="get" class="search-form"> 
       <input type="search" id="search-input" class="search-input" placeholder="Search...">
-      <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
       <span class="search-message hide">no search results</span>
   </form>`;
 }
