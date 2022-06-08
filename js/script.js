@@ -23,7 +23,7 @@ function usersFetch(userData) {
 }
 
 function displayUsers(userData) {
-  gallery.innerHTML=""
+  gallery.innerHTML = "";
   let userHTML = "";
   users = userData;
   userData.forEach((user, index) => {
@@ -107,24 +107,11 @@ function generateModal(index) {
 }
 
 gallery.addEventListener("click", (e) => {
-  // When the employee card is clicked a modal with their information will be generated
   const card = e.target.closest(".card");
   const index = card.getAttribute("data-index");
-  // currentModalIndex = index;
   gModalIndex = index;
-  console.log("currentModalIndex", "gModalIndex", gModalIndex);
-
   generateModal(gModalIndex);
 });
-
-// search.addEventListener("change",(e)=>{
-//   console.log('search e',e,e.value)
-
-// })
-
-// searchSubmit.addEventListener("click", (e) => {
-//   console.log('searchSubmit e',e,e.value)
-// })
 
 function moveModalBack() {
   if (gModalIndex > 0) {
@@ -149,64 +136,34 @@ function moveModalForeword() {
 function generateSearchHTML() {
   searchContainer.innerHTML = `<form action="#" method="get" class="search-form"> 
       <input type="search" id="search-input" class="search-input" placeholder="Search...">
-      <span class="search-message hide">no search results</span>
   </form>`;
 }
-// <button type="button" id="Clear filter" class="Clear filter" onclick="searchclaer()" > clear</button>
 
 generateSearchHTML();
-
 
 const searchBtn = document.getElementById("search-submit");
 const searchForm = document.querySelector(".search-form");
 const searchField = document.getElementById("search-input");
 
 searchContainer.addEventListener("input", (e) => {
-  console.log('e:',e,'\n e.target.value', e.target.value)
-  
-     let searchText ;
-
-       searchText = e.target.value ;
-      searchText = searchText.toUpperCase()
-  
-      // searchBtn.onclick = () => {
-      //   searchField.value = "";
-      //   // console.log('searchBtn.onclick')
-      // };
-      
-    users = fetchUsers
-      const filteredList = users.filter((student) => {
-        return (
-          student.name.first.toUpperCase().includes(searchText) ||
-          student.name.last.toUpperCase().includes(searchText)
-        );
-      });
-      filteredUsers = filteredList;
-      if (filteredUsers.length > 0) {
-        console.log('filteredUsers',filteredUsers,'searchText',searchText)
-        displayUsers(filteredUsers);
-      } else {
-        console.log(" no results  ");
-        document.querySelector('.search-message').classList.remove('hide')
-        gallery.innerHTML="no results "
-      }
-      // console.log('filteredUsers',filteredUsers)
+  // console.log("e:", e, "\n e.target.value", e.target.value);
+  let searchText = e.target.value;
+  searchText = searchText.toUpperCase();
+  users = fetchUsers;
+  const filteredList = users.filter((student) => {
+    return (
+      student.name.first.toUpperCase().includes(searchText) ||
+      student.name.last.toUpperCase().includes(searchText)
+    );
+  });
+  filteredUsers = filteredList;
+  if (filteredUsers.length > 0) {
+    console.log("filteredUsers", filteredUsers, "searchText", searchText);
+    displayUsers(filteredUsers);
+  } else {
+    console.log(" no results  ");
+    gallery.innerHTML = ` no results for " ${searchText} "`;
   }
 
-);
+});
 
-// searchContainer.addEventListener("search", (e) => {
-// console.log('e',e,"\n event value",e.target.value)
-// })
-
-// searchContainer.addEventListener("input", (e) => {
-//   console.log('e',e,"\n event value",e.target.value)
-//   })
-
-function searchclaer(){
-  console.log('searchclaer','searchForm.span.innerHTML',searchForm)
-  users = fetchUsers
-  displayUsers(users)
-  document.querySelector('.search-message').classList.add('hide')
-  searchField.value=null
-}
