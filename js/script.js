@@ -162,21 +162,14 @@ const searchBtn = document.getElementById("search-submit");
 const searchForm = document.querySelector(".search-form");
 const searchField = document.getElementById("search-input");
 
-searchContainer.addEventListener("keydown", (e) => {
-  if((e.keyCode >65 & e.keyCode <90)|| (e.keyCode = 8)||(e.keyCode = 13)){
+searchContainer.addEventListener("input", (e) => {
+  console.log('e:',e,'\n e.target.value', e.target.value)
+  
      let searchText ;
-    if (e.keyCode >65 & e.keyCode <90){
-      console.log('e:',e,'\n e.target.value', e.target.value)
-       searchText = e.target.value + e.key;
-      searchText = searchText.toUpperCase()
-    }else if(e.keyCode = 8){
-      searchText = e.target.value.slice(0,-1) ;
-      searchText = searchText.toUpperCase()
-    }
-    // else if(e.keyCode = 13){
-      // serch botten func
-    // }
 
+       searchText = e.target.value ;
+      searchText = searchText.toUpperCase()
+  
       // searchBtn.onclick = () => {
       //   searchField.value = "";
       //   // console.log('searchBtn.onclick')
@@ -201,14 +194,14 @@ searchContainer.addEventListener("keydown", (e) => {
       // console.log('filteredUsers',filteredUsers)
   }
 
-});
+);
 
 // searchContainer.addEventListener("search", (e) => {
 // console.log('e',e,"\n event value",e.target.value)
 // })
 
-// searchContainer.addEventListener("keypress", (e) => {
-//   console.log('e',e,"\n event value",e.target.value+e.key)
+// searchContainer.addEventListener("input", (e) => {
+//   console.log('e',e,"\n event value",e.target.value)
 //   })
 
 function searchclaer(){
