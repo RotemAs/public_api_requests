@@ -33,7 +33,6 @@ function displayUsers(userData) {
     const city = user.location.city;
     const picture = user.picture;
 
-    // console.log('index:',index,"displayUsers - userData :", userData,'\n user.name :',user.name,'\n user.location.city:',user.location.city);
     // Temperate literal
     userHTML += `
         <div class="card" data-index=${index}>
@@ -81,8 +80,8 @@ function generateModal(index) {
           <p class="modal-text">Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
       </div>
       <div class="modal-btn-container">
-                    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-                    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                    <button type="button" id="modal-prev" class="modal-prev btn"><</button>
+                    <button type="button" id="modal-next" class="modal-next btn">></button>
                 </div>
  
   `;
@@ -146,7 +145,6 @@ const searchForm = document.querySelector(".search-form");
 const searchField = document.getElementById("search-input");
 
 searchContainer.addEventListener("input", (e) => {
-  // console.log("e:", e, "\n e.target.value", e.target.value);
   let searchText = e.target.value;
   searchText = searchText.toUpperCase();
   users = fetchUsers;
@@ -158,10 +156,8 @@ searchContainer.addEventListener("input", (e) => {
   });
   filteredUsers = filteredList;
   if (filteredUsers.length > 0) {
-    console.log("filteredUsers", filteredUsers, "searchText", searchText);
     displayUsers(filteredUsers);
   } else {
-    console.log(" no results  ");
     gallery.innerHTML = ` no results for " ${searchText} "`;
   }
 
