@@ -23,6 +23,7 @@ function usersFetch(userData) {
 }
 
 function displayUsers(userData) {
+  gallery.innerHTML=""
   let userHTML = "";
   users = userData;
   userData.forEach((user, index) => {
@@ -149,42 +150,66 @@ function generateSearchHTML() {
   searchContainer.innerHTML = `<form action="#" method="get" class="search-form"> 
       <input type="search" id="search-input" class="search-input" placeholder="Search...">
       <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-      <button type="button" id="Clear filter" class="Clear filter" onclick="searchclaer()" > clear</button>
       <span class="search-message hide">no search results</span>
   </form>`;
 }
+// <button type="button" id="Clear filter" class="Clear filter" onclick="searchclaer()" > clear</button>
 
 generateSearchHTML();
 
-const searchField = document.getElementById("search-input");
+
 const searchBtn = document.getElementById("search-submit");
 const searchForm = document.querySelector(".search-form");
+const searchField = document.getElementById("search-input");
 
-searchContainer.addEventListener("keyup", () => {
-  let searchText = searchField.value.toUpperCase();
-  searchBtn.onclick = () => {
-    searchField.value = "";
-  };
+searchContainer.addEventListener("keydown", (e) => {
+  if((e.keyCode >65 & e.keyCode <90)|| (e.keyCode = 8)||(e.keyCode = 13)){
+     let searchText ;
+    if (e.keyCode >65 & e.keyCode <90){
+      console.log('e:',e,'\n e.target.value', e.target.value)
+       searchText = e.target.value + e.key;
+      searchText = searchText.toUpperCase()
+    }else if(e.keyCode = 8){
+      searchText = e.target.value.slice(0,-1) ;
+      searchText = searchText.toUpperCase()
+    }
+    // else if(e.keyCode = 13){
+      // serch botten func
+    // }
 
-  const filteredList = users.filter((student) => {
-    return (
-      student.name.first.toUpperCase().includes(searchText) ||
-      student.name.last.toUpperCase().includes(searchText)
-    );
-  });
-  filteredUsers = filteredList;
-
-  if (filteredUsers.length > 0) {
-    gallery.innerHTML = "";
-    displayUsers(filteredUsers);
-  } else {
-    console.log(" else ");
-    document.querySelector('.search-message').classList.remove('hide')
-    displayUsers(fetchUsers);
+      // searchBtn.onclick = () => {
+      //   searchField.value = "";
+      //   // console.log('searchBtn.onclick')
+      // };
+      
+    users = fetchUsers
+      const filteredList = users.filter((student) => {
+        return (
+          student.name.first.toUpperCase().includes(searchText) ||
+          student.name.last.toUpperCase().includes(searchText)
+        );
+      });
+      filteredUsers = filteredList;
+      if (filteredUsers.length > 0) {
+        console.log('filteredUsers',filteredUsers,'searchText',searchText)
+        displayUsers(filteredUsers);
+      } else {
+        console.log(" no results  ");
+        document.querySelector('.search-message').classList.remove('hide')
+        gallery.innerHTML="no results "
+      }
+      // console.log('filteredUsers',filteredUsers)
   }
 
 });
 
+// searchContainer.addEventListener("search", (e) => {
+// console.log('e',e,"\n event value",e.target.value)
+// })
+
+// searchContainer.addEventListener("keypress", (e) => {
+//   console.log('e',e,"\n event value",e.target.value+e.key)
+//   })
 
 function searchclaer(){
   console.log('searchclaer','searchForm.span.innerHTML',searchForm)
